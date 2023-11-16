@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "nombre": "ingles",
+        "work_time": 250,
+        "short_break": 5,
+        "count": 2
+    },
+    {
+        "id": 2,
+        "nombre": "anki",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1
+    },
+    {
+        "id": 3,
+        "nombre": "anki2",
+        "work_time": 40,
+        "short_break": 10,
+        "count": 4
+
+    }
+]
