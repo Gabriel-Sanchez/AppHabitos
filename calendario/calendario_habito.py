@@ -36,8 +36,6 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
     x = np.arange(num_weeks + 1) - 0.5
 
     ax = ax or plt.gca()
-    # cmap = colors.LinearSegmentedColormap.from_list("", ["white","green"])
-    # kwargs.pop('cmap', None)
 
     cmap = plt.cm.Greens
     newcolors = cmap(np.linspace(0.2, 1, 128))
@@ -49,8 +47,6 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
     mesh = ax.pcolormesh(x, y, heatmap, edgecolor='black', cmap=newcmp, vmin=0, **kwargs)
     ax.invert_yaxis()
     
-    
-
     ax.set_xticks(list(ticks.keys()))
     ax.set_xticklabels(list(ticks.values()))
     ax.set_yticks(np.arange(7))
@@ -64,9 +60,14 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
                         arrowprops=dict(arrowstyle="->"))
     annot.set_visible(False)
 
-    def update_annot(i, j, value):
+    def update_annot(i, j, value, date):
         annot.xy = (j,i)
-        text = f"{value} : min - {i}-{j}"
+        hours = int(value // 60)
+        minutes = int(value % 60)
+        seconds = int((value*60) % 60)
+        datetime_str = f"{date.strftime('%Y-%m-%d')} {hours:02d}:{minutes:02d}:{seconds:02d}"
+        # text = f"{datetime_str}: {hours} horas {minutes} minutos {seconds} segundos"
+        text = f"{datetime_str}"
         annot.set_text(text)
         annot.get_bbox_patch().set_alpha(1)
 
@@ -74,14 +75,17 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
         if event.inaxes == ax:
             col = int(event.xdata+0.5)
             row = int(event.ydata+0.5)
+            date = start_sun + np.timedelta64(7 * col + row, 'D')
             value = heatmap[row, col]
-            update_annot(row, col, value)
+            update_annot(row, col, value, date)
             annot.set_visible(True)
             fig.canvas.draw_idle()
         else:
             if annot.get_visible():
                 annot.set_visible(False)
                 fig.canvas.draw_idle()
+
+
 
     fig.canvas.mpl_connect("motion_notify_event", hover)
 
@@ -96,7 +100,7 @@ def habito_calendario(id_habito_especifico):
     data['fecha'] = pd.to_datetime(data['fecha'])
 
     data['duracion'] = pd.to_timedelta(data['duracion'])
-    data['duracion'] = data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 100
+    data['duracion'] = data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 60
 
     data.set_index('fecha', inplace=True)
 
