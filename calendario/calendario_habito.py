@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+# import matplotlib.colors as colors
+from matplotlib.colors import ListedColormap
 
 DAYS = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thurs.', 'Fri.', 'Sat.']
 MONTHS = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
@@ -34,7 +36,17 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
     x = np.arange(num_weeks + 1) - 0.5
 
     ax = ax or plt.gca()
-    mesh = ax.pcolormesh(x, y, heatmap, edgecolor='black', vmin=0, **kwargs)
+    # cmap = colors.LinearSegmentedColormap.from_list("", ["white","green"])
+    # kwargs.pop('cmap', None)
+
+    cmap = plt.cm.Greens
+    newcolors = cmap(np.linspace(0.2, 1, 128))
+    white = np.array([1, 1, 1, 1])
+    newcolors[:1, :] = white
+    newcmp = ListedColormap(newcolors)
+
+    kwargs.pop('cmap', None)
+    mesh = ax.pcolormesh(x, y, heatmap, edgecolor='black', cmap=newcmp, vmin=0, **kwargs)
     ax.invert_yaxis()
     
     
