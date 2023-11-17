@@ -3,7 +3,28 @@ import tkinter as tk
 from tkinter import messagebox
 from registros.CRUD_registros import registrar_habito, registrar_Fin_habito,registrar_Inicio_habito, registrar_habito_descanso
 
+
+def set_variables(work_time, short_break,id):
+    global work_time_global
+    work_time_global = work_time
+    global short_break_global
+    short_break_global = short_break
+    global break_time
+    break_time = True
+    global running
+    running = False
+    global time_running
+    time_running = 0
+    global id_global
+    id_global = id
+    
+    global must_save
+    must_save = False
+
+
 def start_timer(root, timer_label, timer_label_count, work_time, short_break, count, id):
+    global must_save
+    must_save = True
     global id_global
     id_global = id
     global running
@@ -73,22 +94,22 @@ def stop_timer():
     running = False
 
 
-def save_csv_timer():
-    #tranformar los numeros que se estan guardando en el csv por tiempo no decimales, 
+def save_csv_timer(): 
     global running
     global break_time
     global time_running
     global short_break_global
     global work_time_global
-    #time_running_seconds_decimoal = time_running / 60 estro tranformarlo de decimal a tiempo y revisar si se esta guardando bien el breaktime correcto
     running = False
-    if break_time:
-        tiempo = (work_time_global * 60) - time_running
-        registrar_habito(id_global, tiempo)
-    else:
-        tiempo = (short_break_global * 60) - time_running
-        registrar_habito_descanso(id_global, tiempo)
-    registrar_Fin_habito(id_global)
+    
+    if must_save:
+        if break_time:
+            tiempo = (work_time_global * 60) - time_running
+            registrar_habito(id_global, tiempo)
+        else:
+            tiempo = (short_break_global * 60) - time_running
+            registrar_habito_descanso(id_global, tiempo)
+        registrar_Fin_habito(id_global)
         
 
     

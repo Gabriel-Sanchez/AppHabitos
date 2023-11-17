@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
-from pomodoro.pomodoro_app import start_timer, pause_timer, resume_timer, stop_timer, save_csv_timer
+from pomodoro.pomodoro_app import start_timer, pause_timer, resume_timer, stop_timer, save_csv_timer, set_variables
 from pomodoro.lee_habito import get_times_pomodoro
 
 def ventana_pomodoro(opcion):
+    
     def start_button_clicked():
         # work_time = int(work_time_input.get())
         start_button['state'] = 'disabled'
@@ -33,6 +34,7 @@ def ventana_pomodoro(opcion):
         if messagebox.askokcancel("Salir", "¿Realmente desea salir?"):
             save_csv_timer()
             root.destroy()
+    
 
     root = tk.Tk()
     root.title("Pomodoro Timer")
@@ -40,6 +42,7 @@ def ventana_pomodoro(opcion):
     root.protocol("WM_DELETE_WINDOW", on_closing)
 
     work_time, short_break, count, id = get_times_pomodoro(opcion)
+    set_variables(work_time, short_break, id)
     # work_time_input = tk.StringVar()
     # work_time_input.set(work_time)
 

@@ -10,6 +10,18 @@ def abrir_otra_ventana():
     ventana_pomodoro.ventana_pomodoro(2)
     
 
+def center_window(root, width=300, height=200):
+    # Obtiene las dimensiones de la pantalla
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # Calcula la posición del centro
+    center_x = (screen_width // 2) - (width // 2)
+    center_y = (screen_height // 2) - (height // 2)
+
+    # Centra la ventana
+    root.geometry(f'{width}x{height}+{center_x}+{center_y}')
+
 def seleccionar_opcion(id):
     print(f"Opción seleccionada: {id}")
 
@@ -43,4 +55,5 @@ boton2 = tk.Button(root, text="calendar", command=abrir_habito_calendario)
 boton.pack()
 boton2.pack()
 
+center_window(root, 500, 400)
 root.mainloop()

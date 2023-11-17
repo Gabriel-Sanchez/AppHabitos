@@ -3,11 +3,36 @@ import pandas as pd
 import matplotlib.pyplot as plt
 # import matplotlib.colors as colors
 from matplotlib.colors import ListedColormap
+import json
+
+
+    
+def center_figure(fig):
+    # Obtiene el administrador de la figura
+    manager = plt.get_current_fig_manager()
+
+    # Obtiene las dimensiones de la pantalla
+    screen_width = manager.window.winfo_screenwidth()
+    screen_height = manager.window.winfo_screenheight()
+
+    # Obtiene las dimensiones de la figura
+    fig_width, fig_height = fig.get_size_inches() * fig.dpi
+
+    # Calcula la posición del centro
+    center_x = (screen_width // 2) - (fig_width // 2)
+    center_y = (screen_height // 2) - (fig_height // 2)
+
+    # Centra la figura
+    manager.window.geometry('+%d+%d' % (center_x, center_y))
+    
+
+
+
 
 DAYS = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thurs.', 'Fri.', 'Sat.']
 MONTHS = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
 
-def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   **kwargs):
+def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None, data=None,  **kwargs):
     dates = series.index.floor('D')
     group = series.groupby(dates)
     series = group.mean() if mean else group.sum()
@@ -55,19 +80,19 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
     plt.sca(ax)
     plt.sci(mesh)
 
-    annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
+    annot = ax.annotate("", xy=(0,0), xytext=(10,10),textcoords="offset points",
                         bbox=dict(boxstyle="round", fc="w"),
                         arrowprops=dict(arrowstyle="->"))
     annot.set_visible(False)
 
-    def update_annot(i, j, value, date):
+    def update_annot(i, j, value, date, extra_data):
         annot.xy = (j,i)
         hours = int(value // 60)
         minutes = int(value % 60)
         seconds = int((value*60) % 60)
         datetime_str = f"{date.strftime('%Y-%m-%d')} {hours:02d}:{minutes:02d}:{seconds:02d}"
-        # text = f"{datetime_str}: {hours} horas {minutes} minutos {seconds} segundos"
-        text = f"{datetime_str}"
+        # text = f"{datetime_str}: {hours} horas {minutes} minutos {seconds} segundos, {extra_data}"
+        text = f"{datetime_str}\n{extra_data}"
         annot.set_text(text)
         annot.get_bbox_patch().set_alpha(1)
 
@@ -77,7 +102,8 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
             row = int(event.ydata+0.5)
             date = start_sun + np.timedelta64(7 * col + row, 'D')
             value = heatmap[row, col]
-            update_annot(row, col, value, date)
+            extra_data = data.loc[date, 'start_timer']  
+            update_annot(row, col, value, date, extra_data)
             annot.set_visible(True)
             fig.canvas.draw_idle()
         else:
@@ -85,14 +111,20 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None,   
                 annot.set_visible(False)
                 fig.canvas.draw_idle()
 
-
-
     fig.canvas.mpl_connect("motion_notify_event", hover)
 
     return ax
 
 
 def habito_calendario(id_habito_especifico):
+    with open('habitos/lista_habitos.json', 'r') as f:
+        data_habito = json.load(f)
+
+    # Filtrar los datos por id usando una comprensión de lista
+    filtered_data = [item for item in data_habito if item['id'] == id_habito_especifico]
+    filtered_data = filtered_data[0]
+    
+    
     data = pd.read_csv('registros/historial_habitos.csv')
     
     data = data.loc[data['id_habito'] == id_habito_especifico]
@@ -106,11 +138,18 @@ def habito_calendario(id_habito_especifico):
 
     idx = pd.date_range(start='1/1/2023', end='12/31/2023')
     data = data.reindex(idx, fill_value=np.nan)
-    fig, ax = plt.subplots(figsize=(16, 4))
+    fig, ax = plt.subplots(figsize=(16, 2))
  
     
-    date_heatmap(data['duracion'], cmap='YlOrRd', ax=ax, fig=fig)
-    plt.colorbar()
+    date_heatmap(data['duracion'], cmap='YlOrRd', ax=ax, fig=fig, data=data)
+    
+    plt.title(filtered_data["nombre"])
+    
+    # plt.colorbar()
+    cax = fig.add_axes([0.05, 0.2, 0.01, 0.6])  
+    plt.colorbar(cax=cax, orientation='vertical')
+    fig.set_size_inches(14, 4)
+    center_figure(fig)
     plt.show()
 
 #fig, ax = plt.subplots(figsize=(16, 4))
