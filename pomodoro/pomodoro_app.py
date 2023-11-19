@@ -52,19 +52,25 @@ def count_down(root, timer_label,timer_label_count, seconds):
         mins, secs = divmod(seconds, 60)
         time_running = mins * 60 + secs
         timer_label['text'] = f'{mins:02d}:{secs:02d}'
+        # root.title(f'{mins:02d}:{secs:02d}')
         root.after(1000, count_down, root, timer_label, timer_label_count, seconds - 1)
+        if break_time:
+            root.configure(bg='#ff0000')
+        else:
+            root.configure(bg='green')
         # print(break_time)
     elif running and seconds < 0 and count_global > 0:
+        
         if break_time:
             count_down(root, timer_label, timer_label_count, short_break_global * 60)
-            timer_label_count['text'] = "Descanso"
+            timer_label_count['text'] = f'{count_global:02d}'
             break_time = False
             registrar_habito(id_global,work_time_global * 60)
         else:
             break_time = True
             count_down(root, timer_label, timer_label_count, work_time_global * 60)
             count_global -= 1
-            timer_label_count['text'] = str(count_global)
+            timer_label_count['text'] =  f'{count_global:02d}'
             registrar_habito_descanso(id_global, short_break_global *60 )
         
     # elif running and seconds < 0 :
@@ -101,6 +107,11 @@ def save_csv_timer():
     global short_break_global
     global work_time_global
     running = False
+    
+    print("short_break_global")
+    print(short_break_global)
+    print("time_running")
+    print(time_running)
     
     if must_save:
         if break_time:

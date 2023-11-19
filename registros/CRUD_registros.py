@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 def format_timedelta(td):
+    #print(td)
     total_seconds = int(td.total_seconds())
     hours, remainder = divmod(total_seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
