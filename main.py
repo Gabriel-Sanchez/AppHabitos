@@ -86,24 +86,33 @@ def abrir_calendario(nombre):
 
 root = tk.Tk()
 
+lista_habitos = tk.Frame(root, bg='white', relief='raised')
+lista_habitos.pack()
+i = 0
 # Crear botones para cada opción en el diccionario
 for nombre in opciones.keys():
-    boton = tk.Button(root, text=nombre, command=lambda n=nombre: mostrar_id(n))
-    boton.pack()
-    boton_cal = tk.Button(root, text=nombre, command=lambda n=nombre: abrir_calendario(n))
-    boton_cal.pack()
+    label_mover = tk.Label(lista_habitos, text=nombre, bg='#089aff', fg='white')
+    label_mover.grid(row=i, column=0, sticky="w")
+    
+    boton = tk.Button(lista_habitos, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
+    boton.grid(row=i, column=1)
+    
+    boton_cal = tk.Button(lista_habitos, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
+    boton_cal.grid(row=i, column=2)
+    i = i + 1
+    print(i)
 
 
 
 
-# Crear botón para enviar selección
-boton = tk.Button(root, text="Enviar", command=enviar_seleccion)
-boton2 = tk.Button(root, text="calendar", command=abrir_habito_calendario)
-boton.pack()
-boton2.pack()
+# # Crear botón para enviar selección
+# boton = tk.Button(root, text="Enviar", command=enviar_seleccion)
+# boton2 = tk.Button(root, text="calendar", command=abrir_habito_calendario)
+# boton.pack()
+# boton2.pack()
 
-btn_mantener = tk.Button(root, text="Mantener en Primero", command=mantener_en_primero)
-btn_mantener.pack(pady=20)
+# btn_mantener = tk.Button(root, text="Mantener en Primero", command=mantener_en_primero)
+# btn_mantener.pack(pady=20)
 
 center_window(root, 500, 400)
 

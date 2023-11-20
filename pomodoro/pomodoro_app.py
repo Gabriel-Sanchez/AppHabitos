@@ -2,6 +2,13 @@ import time
 import tkinter as tk
 from tkinter import messagebox
 from registros.CRUD_registros import registrar_habito, registrar_Fin_habito,registrar_Inicio_habito, registrar_habito_descanso
+import pygame
+
+pygame.init()
+sound_file = "assets/sounds/fin_bien.mp3"  
+
+sonido_fin = pygame.mixer.Sound(sound_file)
+sonido_fin.set_volume(0.2)
 
 
 def set_variables(work_time, short_break,id):
@@ -60,7 +67,7 @@ def count_down(root, timer_label,timer_label_count, seconds):
             root.configure(bg='green')
         # print(break_time)
     elif running and seconds < 0 and count_global > 0:
-        
+        sonido_fin.play()
         if break_time:
             count_down(root, timer_label, timer_label_count, short_break_global * 60)
             timer_label_count['text'] = f'{count_global:02d}'

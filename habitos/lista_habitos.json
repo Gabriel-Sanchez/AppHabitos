@@ -4,28 +4,32 @@
         "nombre": "prueba",
         "work_time": 1,
         "short_break": 1,
-        "count": 1
+        "count": 1,
+        "type":1
     },
     {
         "id": 1,
         "nombre": "ingles",
         "work_time": 10,
         "short_break": 5,
-        "count": 1
+        "count": 1,
+        "type":1
     },
     {
         "id": 2,
         "nombre": "anki",
         "work_time": 15,
         "short_break": 5,
-        "count": 1
+        "count": 1,
+        "type":1
     },
     {
         "id": 3,
         "nombre": "Habilidades blandas",
         "work_time": 10,
         "short_break": 1,
-        "count": 1
+        "count": 1,
+        "type":1
 
     },
     {
@@ -33,7 +37,8 @@
         "nombre": "Ingenieria",
         "work_time": 10,
         "short_break": 1,
-        "count": 1
+        "count": 1,
+        "type":1
 
     },
     {
@@ -41,7 +46,107 @@
         "nombre": "Tesis",
         "work_time": 25,
         "short_break": 5,
-        "count": 2
+        "count": 2,
+        "type":1
+
+    },
+    {
+        "id": 6,
+        "nombre": "crema",
+        "work_time": 25,
+        "short_break": 5,
+        "count": 2,
+        "type":1
+
+    },
+    {
+        "id": 7,
+        "nombre": "Duo",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 8,
+        "nombre": "Bussu",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 9,
+        "nombre": "Fotografia",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 10,
+        "nombre": "habby",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 11,
+        "nombre": "Ejercicio",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 12,
+        "nombre": "Chat in english ",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 13,
+        "nombre": "Ortografia",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 14,
+        "nombre": "Platzi español ",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 15,
+        "nombre": "one piece",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 16,
+        "nombre": "vagabond",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type":1
 
     }
 ]
