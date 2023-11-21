@@ -148,5 +148,23 @@
         "count": 1,
         "type":1
 
+    },
+    {
+        "id": 17,
+        "nombre": "Leer ingles",
+        "work_time": 5,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
+    },
+    {
+        "id": 18,
+        "nombre": "Leer",
+        "work_time": 5,
+        "short_break": 1,
+        "count": 1,
+        "type":1
+
     }
 ]
