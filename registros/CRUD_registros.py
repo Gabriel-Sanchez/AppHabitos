@@ -1,6 +1,21 @@
 import pandas as pd
 from datetime import datetime
 
+def save_daily_habit(id_habito):
+    hoy = datetime.now().date()
+    df = pd.read_csv('registros/check_historial_habitos.csv')
+    df['fecha_hora'] = pd.to_datetime(df['fecha_hora'])
+    
+    # if hoy not in df.loc[df['id_habito'] == id_habito, 'fecha_hora'].dt.date.values:
+    #     nueva_fila = {'id_habito': id_habito, 'fecha_hora': hoy, 'hecho': 1}
+    #     df = df.append(nueva_fila, ignore_index=True)
+    
+    if hoy not in df.loc[df['id_habito'] == id_habito, 'fecha_hora'].dt.date.values:
+        nueva_fila = pd.DataFrame({'id_habito': [id_habito], 'fecha_hora': [hoy], 'hecho': [1]})
+        df = pd.concat([df, nueva_fila], ignore_index=True)
+        df.to_csv('registros/check_historial_habitos.csv', index=False)
+    
+
 
 def format_timedelta(td):
     #print(td)

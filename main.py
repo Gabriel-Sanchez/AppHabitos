@@ -1,6 +1,7 @@
 from pomodoro import ventana_pomodoro, lee_habito
 from habitos import logica_habitos
 from calendario.calendario_habito import habito_calendario
+from registros.CRUD_registros import save_daily_habit
 import tkinter as tk
 import json
 
@@ -62,12 +63,12 @@ def center_window(root, width=300, height=200):
 def seleccionar_opcion(id):
     print(f"Opción seleccionada: {id}")
 
-def enviar_seleccion():
-    seleccionar_opcion(opciones[var.get()])
-    ventana_pomodoro.ventana_pomodoro(opciones[var.get()])
+# def enviar_seleccion():
+#     seleccionar_opcion(opciones[var.get()])
+#     ventana_pomodoro.ventana_pomodoro(opciones[var.get()])
     
-def abrir_habito_calendario():
-    habito_calendario(opciones[var.get()])
+# def abrir_habito_calendario():
+#     habito_calendario(opciones[var.get()])
 
 # Leer opciones de archivo JSON
 with open('habitos/lista_habitos.json', 'r') as f:
@@ -100,7 +101,8 @@ def mostrar_id(nombre):
     if opciones[nombre]['type'] == 1:
         ventana_pomodoro.ventana_pomodoro(id_seleccionado)
     elif opciones[nombre]['type'] == 2:
-        pass #otro tipo guardar directamente como hecho en el dia en un nuevo csv 
+        save_daily_habit(id_seleccionado)
+         #otro tipo guardar directamente como hecho en el dia en un nuevo csv 
         
     
     
@@ -149,7 +151,15 @@ lista_habitos.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas
 i = 0
 # Crear botones para cada opción en el diccionario
 for nombre in opciones.keys():
-    label_mover = tk.Label(lista_habitos, text=nombre, bg='#089aff', fg='white')
+    if opciones[nombre]['type'] == 1:
+        color = "#089aff"
+        
+    elif opciones[nombre]['type'] == 2:
+        color = "#73c977"
+        
+       
+    
+    label_mover = tk.Label(lista_habitos, text=nombre, bg=color, fg='white')
     label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
     
     boton = tk.Button(lista_habitos, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
@@ -158,7 +168,7 @@ for nombre in opciones.keys():
     boton_cal = tk.Button(lista_habitos, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
     boton_cal.grid(row=i, column=2, sticky="w", padx=(1,100))
     i = i + 1
-    print(i)
+    
 
 
 
