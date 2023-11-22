@@ -20,6 +20,13 @@ def ventana_main():
             canvas.xview_scroll(scroll, "units")
         else:
             canvas.yview_scroll(scroll, "units")
+    def on_mousewheel_scroll_hecho(event):
+        shift = (event.state & 0x1) != 0
+        scroll = -1 if event.delta > 0 else 1
+        if shift:
+            canvas3.xview_scroll(scroll, "units")
+        else:
+            canvas3.yview_scroll(scroll, "units")
 
 
 
@@ -145,8 +152,12 @@ def ventana_main():
     canvas.configure(yscrollcommand=scrollbar.set)
 
     # Empaqueta el canvas y la barra de desplazamiento
-    canvas.pack(side="left", fill="both", expand=True)
-    scrollbar.pack(side="right", fill="y")
+    # canvas.pack(side="left", fill="both", expand=True)
+    # scrollbar.pack(side="right", fill="y")
+    
+    canvas.grid(row=0, column=0, sticky="nsew")
+    scrollbar.grid(row=0, column=1, sticky="ns")
+    
 
     # Agrega el frame al canvas
     canvas.create_window((0,0), window=lista_habitos, anchor="nw")
@@ -167,13 +178,61 @@ def ventana_main():
     def toggle():
         if frame.winfo_viewable():
             # frame.grid_remove()
-            frame.pack_forget()
+            canvas3.grid_remove()
+            # frame.pack_forget()
+   
+            scrollbar3.grid_remove()
         else:
-            # frame.grid()
-            frame.pack()
+            canvas3.grid(row=2, column=0, sticky="nsew")
+            scrollbar3.grid(row=2, column=1, sticky="ns")
+            # Redibuja el Frame en el Canvas
+            # canvas2.create_window((0, 0), window=frame, anchor="nw")
+            # frame.update_idletasks()
+            # canvas2.config(scrollregion=canvas2.bbox("all"))
+            # # frame.grid(row=2, column=0 , sticky="nsew" ) 
+            # canvas2.grid(row=2, column=0, sticky="nsew")
+            # scrollbar2.grid(row=2, column=1, sticky="ns")
+            # frame.update_idletasks()
+            # canvas2.config(scrollregion=canvas2.bbox("all"))
+
+            # frame.pack()
 
     # Crea un frame
-    frame = tk.Frame(root)
+    
+    
+   
+    # canvas2 = tk.Canvas(root)
+    # scrollbar2 = tk.Scrollbar(root, orient="vertical", command=canvas2.yview)
+    # canvas2.configure(yscrollcommand=scrollbar2.set)
+    # # frame2 = tk.Frame(canvas2)
+    # canvas2.create_window((0, 0), window=frame, anchor="nw")
+    
+    
+    
+    # frame.bind("<Configure>", lambda e: canvas2.configure(scrollregion=canvas2.bbox("all")))
+    
+    
+    
+    canvas3 = tk.Canvas(root)
+    scrollbar3 = tk.Scrollbar(root, orient="vertical", command=canvas3.yview)
+
+    # lista_habitos = tk.Frame(canvas3)
+    frame = tk.Frame(canvas3)
+
+    canvas3.configure(yscrollcommand=scrollbar3.set)
+    
+    canvas3.grid(row=2, column=0, sticky="nsew")
+    scrollbar3.grid(row=2, column=1, sticky="ns")
+
+    canvas3.create_window((0,0), window=frame, anchor="nw")
+    canvas3.bind_all("<MouseWheel>", on_mousewheel_scroll_hecho)
+
+    frame.bind("<Configure>", lambda e: canvas3.configure(scrollregion=canvas3.bbox("all")))
+    
+    
+    
+    
+    
 
     # Crea algunos widgets en el frame
     # for i in range(10):
@@ -183,7 +242,8 @@ def ventana_main():
     # Crea un botón que muestre u oculte el frame
     button = tk.Button(root, text="hechos", command=toggle)
     # button.grid()
-    button.pack()
+    # button.pack()
+    button.grid(row=1, column=0 )
 
 
 
@@ -244,6 +304,7 @@ def ventana_main():
                 labels[i].grid_remove()
                 botones[i].grid_remove()
                 botones_cal[i].grid_remove()
+        
     actualiza_listas()
             
     #     if hecho_diario:
@@ -387,7 +448,6 @@ def ventana_main():
     # # Botón para cerrar la ventana
     # btn_cerrar = tk.Button(root, text="Cerrar", command=cerrar_ventana)
     # btn_cerrar.pack()
-
 
 
 
