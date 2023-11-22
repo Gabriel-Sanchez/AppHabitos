@@ -4,6 +4,8 @@ from pomodoro.pomodoro_app import start_timer, pause_timer, resume_timer, stop_t
 from pomodoro.lee_habito import get_times_pomodoro
 from tkinter import font
 
+import main
+
 
 
 def ventana_pomodoro(opcion):
@@ -39,6 +41,7 @@ def ventana_pomodoro(opcion):
         if messagebox.askokcancel("Salir", "¿Realmente desea salir?"):
             save_csv_timer()
             root.destroy()
+            main.ventana_main()
     
 
     background_color = "#1f1f1f"

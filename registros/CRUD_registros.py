@@ -14,7 +14,32 @@ def save_daily_habit(id_habito):
         nueva_fila = pd.DataFrame({'id_habito': [id_habito], 'fecha_hora': [hoy], 'hecho': [1]})
         df = pd.concat([df, nueva_fila], ignore_index=True)
         df.to_csv('registros/check_historial_habitos.csv', index=False)
+        
+        
+def verify_daily_habit(id_habito):
+    hoy = datetime.now().date()
+    df = pd.read_csv('registros/check_historial_habitos.csv')
+    df['fecha_hora'] = pd.to_datetime(df['fecha_hora'])
     
+    existe = False
+    
+    if hoy in df.loc[df['id_habito'] == id_habito, 'fecha_hora'].dt.date.values:
+        existe = True
+
+    return existe
+
+
+def verify_daily_habit_pomodoro(id_habito):
+    hoy = datetime.now().date()
+    df = pd.read_csv('registros/historial_habitos.csv')
+    df['fecha'] = pd.to_datetime(df['fecha'])
+    
+    existe = False
+    
+    if hoy in df.loc[df['id_habito'] == id_habito, 'fecha'].dt.date.values:
+        existe = True
+
+    return existe
 
 
 def format_timedelta(td):
