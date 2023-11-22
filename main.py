@@ -1,6 +1,6 @@
 from pomodoro import ventana_pomodoro, lee_habito
 from habitos import logica_habitos
-from calendario.calendario_habito import habito_calendario
+from calendario.calendario_habito import habito_calendario, habito_calendario_check
 from registros.CRUD_registros import save_daily_habit, verify_daily_habit, verify_daily_habit_pomodoro
 import tkinter as tk
 import json
@@ -110,7 +110,10 @@ def ventana_main():
     def abrir_calendario(nombre):
         id_seleccionado = opciones[nombre]['id']
         print(f"Seleccionado22: {nombre} (ID: {id_seleccionado})")
-        habito_calendario(id_seleccionado)
+        if opciones[nombre]['type'] == 1:
+            habito_calendario(id_seleccionado)
+        elif opciones[nombre]['type'] == 2:
+            habito_calendario_check(id_seleccionado)
 
     root = tk.Tk()
 

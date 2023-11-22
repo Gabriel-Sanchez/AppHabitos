@@ -32,7 +32,7 @@ def center_figure(fig):
 DAYS = ['Sun.', 'Mon.', 'Tues.', 'Wed.', 'Thurs.', 'Fri.', 'Sat.']
 MONTHS = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
 
-def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None, data=None,  **kwargs):
+def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None, data=None, campo_data_extra=None , **kwargs):
     dates = series.index.floor('D')
     group = series.groupby(dates)
     series = group.mean() if mean else group.sum()
@@ -102,7 +102,7 @@ def date_heatmap(series, start=None, end=None, mean=False, ax=None, fig=None, da
             row = int(event.ydata+0.5)
             date = start_sun + np.timedelta64(7 * col + row, 'D')
             value = heatmap[row, col]
-            extra_data = data.loc[date, 'start_timer']  
+            extra_data = data.loc[date, campo_data_extra]  
             update_annot(row, col, value, date, extra_data)
             annot.set_visible(True)
             fig.canvas.draw_idle()
@@ -141,7 +141,43 @@ def habito_calendario(id_habito_especifico):
     fig, ax = plt.subplots(figsize=(16, 2))
  
     
-    date_heatmap(data['duracion'], cmap='YlOrRd', ax=ax, fig=fig, data=data)
+    date_heatmap(data['duracion'], cmap='YlOrRd', ax=ax, fig=fig, data=data , campo_data_extra='start_timer')
+    
+    plt.title(filtered_data["nombre"])
+    
+    # plt.colorbar()
+    cax = fig.add_axes([0.05, 0.2, 0.01, 0.6])  
+    plt.colorbar(cax=cax, orientation='vertical')
+    fig.set_size_inches(14, 4)
+    center_figure(fig)
+    plt.show()
+    
+def habito_calendario_check(id_habito_especifico):
+    with open('habitos/lista_habitos.json', 'r') as f:
+        data_habito = json.load(f)
+
+    # Filtrar los datos por id usando una comprensión de lista
+    filtered_data = [item for item in data_habito if item['id'] == id_habito_especifico]
+    filtered_data = filtered_data[0]
+    
+    
+    data = pd.read_csv('registros/check_historial_habitos.csv')
+    
+    data = data.loc[data['id_habito'] == id_habito_especifico]
+
+    data['fecha_hora'] = pd.to_datetime(data['fecha_hora'])
+
+    # data['duracion'] = pd.to_timedelta(data['duracion'])
+    # data['duracion'] = data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 60
+
+    data.set_index('fecha_hora', inplace=True)
+
+    idx = pd.date_range(start='1/1/2023', end='12/31/2023')
+    data = data.reindex(idx, fill_value=np.nan)
+    fig, ax = plt.subplots(figsize=(16, 2))
+ 
+    
+    date_heatmap(data['hecho'], cmap='YlOrRd', ax=ax, fig=fig, data=data, campo_data_extra='id_habito')
     
     plt.title(filtered_data["nombre"])
     
