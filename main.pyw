@@ -287,7 +287,7 @@ def ventana_main():
         boton_cal = tk.Button(lista_habitos, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
         boton_edit = tk.Button(lista_habitos, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
         
-        label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
+        label_mover.grid(row=i, column=0,sticky='ew', padx=(100,20))
         boton.grid(row=i, column=1, sticky="w", padx=(50,1))
         boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
         boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
@@ -309,7 +309,7 @@ def ventana_main():
                 
             if hecho_diario:
                 label_mover = tk.Label(frame, text=nombre, bg=color, fg='white')
-                label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
+                label_mover.grid(row=i, column=0, sticky='ew', padx=(50,20))
                 
                 boton = tk.Button(frame, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
                 boton.grid(row=i, column=1, sticky="w", padx=(50,1))
@@ -562,6 +562,8 @@ def ventana_main():
 
 
     tk.Button(root, text="Show Data", command=show_data).grid(row=1, column=2 )
+    
+    root.iconbitmap('assets/icon/icon.ico')
 
     root.mainloop()
 

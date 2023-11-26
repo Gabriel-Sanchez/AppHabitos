@@ -132,7 +132,9 @@ def habito_calendario(id_habito_especifico):
     data['fecha'] = pd.to_datetime(data['fecha'])
 
     data['duracion'] = pd.to_timedelta(data['duracion'])
-    data['duracion'] = data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 60
+    # data['duracion'] = data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 60
+    data['duracion'] = data['duracion'].dt.components['hours'] * 60 + data['duracion'].dt.components['minutes'] + data['duracion'].dt.components['seconds'] / 60
+
 
     data.set_index('fecha', inplace=True)
 
