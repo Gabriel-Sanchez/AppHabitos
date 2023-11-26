@@ -525,8 +525,47 @@ def ventana_main():
 
 
 
+    def show_data():
+        # Crear una nueva ventana si no existe
+        if 'new_window' not in globals():
+            global new_window
+            new_window = tk.Toplevel(root)
+            new_window.protocol("WM_DELETE_WINDOW", close_window)
+        
+        # Limpiar la ventana
+        for widget in new_window.winfo_children():
+            widget.destroy()
+        
+        # Cargar los datos y ordenarlos por 'orden_n'
+        data = sorted(load_data(), key=lambda x: x['orden_n'])
+        
+        # Función para mover un elemento hacia arriba o hacia abajo
+        def move(i, direction):
+            # Intercambiar 'orden_n' con el elemento de arriba/abajo
+            data[i]['orden_n'], data[i + direction]['orden_n'] = data[i + direction]['orden_n'], data[i]['orden_n']
+            # Guardar los datos
+            save_data(data)
+            # Recargar la ventana
+            show_data()
+        
+        # Mostrar todos los elementos
+        for i, item in enumerate(data):
+            # tk.Label(new_window, text=json.dumps(item)).pack()
+            tk.Label(new_window, text=item['nombre']).grid(row=i,column=2)
+            # Botón para mover el elemento hacia arriba (si no es el primero)
+            if i > 0:
+                tk.Button(new_window, text="↑", command=lambda i=i: move(i, -1)).grid(row=i,column=0)
+            # Botón para mover el elemento hacia abajo (si no es el último)
+            if i < len(data) - 1:
+                tk.Button(new_window, text="↓", command=lambda i=i: move(i, 1)).grid(row=i,column=1)
+
+    def close_window():
+        # Eliminar la referencia a la ventana cuando se cierra
+        del globals()['new_window']            
+    
 
 
+    tk.Button(root, text="Show Data", command=show_data).grid(row=1, column=2 )
 
     root.mainloop()
 
