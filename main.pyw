@@ -473,7 +473,49 @@ def ventana_main():
 
 
 
+    def load_data():
+        with open('habitos/lista_habitos.json', 'r') as f:
+            return json.load(f)
 
+    def save_data(data):
+        with open('habitos/lista_habitos.json', 'w') as f:
+            json.dump(data, f, indent=4)
+
+    def add_data():
+    # Crear una nueva ventana
+        new_window = tk.Toplevel(root)
+    
+        # Cargar los datos
+        data = load_data()
+        
+        # Crear campos de entrada para cada clave en el diccionario
+        entries = {}
+        for key in data[0].keys():
+            tk.Label(new_window, text=key).pack()
+            entries[key] = tk.Entry(new_window)
+            entries[key].pack()
+        
+        # Función para agregar los datos ingresados a la lista de datos
+        def submit():
+            new_entry = {}
+            for key, entry in entries.items():
+                value = entry.get()
+                # Convertir a int si es posible, de lo contrario dejar como texto
+                try:
+                    value = int(value)
+                except ValueError:
+                    pass
+                new_entry[key] = value
+            data.append(new_entry)
+            save_data(data)  # Guardar los datos en el archivo .json
+            new_window.destroy()
+        
+        tk.Button(new_window, text="Submit", command=submit).pack()
+
+
+
+    # Botón para abrir la ventana de agregar datos
+    tk.Button(root, text="Add Data", command=add_data).grid(row=1, column=1 )
 
 
 
