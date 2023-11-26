@@ -482,22 +482,28 @@ def ventana_main():
             json.dump(data, f, indent=4)
 
     def add_data():
-    # Crear una nueva ventana
+        # Crear una nueva ventana
         new_window = tk.Toplevel(root)
-    
+        
         # Cargar los datos
         data = load_data()
         
-        # Crear campos de entrada para cada clave en el diccionario
+        # Calcular el próximo ID
+        next_id = max(item['id'] for item in data) + 1
+        
+        # Especificar los campos permitidos
+        allowed_fields = ['nombre', 'work_time', 'short_break', 'count', 'type', 'orden_n']
+        
+        # Crear campos de entrada solo para las claves permitidas
         entries = {}
-        for key in data[0].keys():
+        for key in allowed_fields:
             tk.Label(new_window, text=key).pack()
             entries[key] = tk.Entry(new_window)
             entries[key].pack()
         
         # Función para agregar los datos ingresados a la lista de datos
         def submit():
-            new_entry = {}
+            new_entry = {'id': next_id}
             for key, entry in entries.items():
                 value = entry.get()
                 # Convertir a int si es posible, de lo contrario dejar como texto
@@ -510,12 +516,8 @@ def ventana_main():
             save_data(data)  # Guardar los datos en el archivo .json
             new_window.destroy()
         
+        # Botón para enviar los datos
         tk.Button(new_window, text="Submit", command=submit).pack()
-
-
-
-    # Botón para abrir la ventana de agregar datos
-    tk.Button(root, text="Add Data", command=add_data).grid(row=1, column=1 )
 
 
 
