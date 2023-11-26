@@ -1,5 +1,5 @@
 from pomodoro import ventana_pomodoro, lee_habito
-from habitos import logica_habitos
+from habitos import logica_habitos, edit_habitos
 from calendario.calendario_habito import habito_calendario, habito_calendario_check
 from registros.CRUD_registros import save_daily_habit, verify_daily_habit, verify_daily_habit_pomodoro
 import tkinter as tk
@@ -95,8 +95,14 @@ def ventana_main():
 
 
     # Crear diccionario de opciones con nombres como claves e IDs como valores
-    opciones = {item['nombre']: { 'id': item['id'], 'type': item['type']  }    for item in data}
-    print(opciones)
+    opciones = {item['nombre']: { 'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n'] }    for item in data}
+    # print(opciones)
+    # Sort the data based on 'orden_n'
+    sorted_data = sorted(data, key=lambda item: item['orden_n'])
+
+    # Now, create your dictionary
+    opciones = {item['nombre']: {'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n']} for item in sorted_data}
+
 
     # Función para mostrar el ID cuando se presiona un botón
     def mostrar_id(nombre):
@@ -121,6 +127,10 @@ def ventana_main():
             habito_calendario(id_seleccionado)
         elif opciones[nombre]['type'] == 2:
             habito_calendario_check(id_seleccionado)
+    
+    def abrir_editar_habito_pom(nombre):
+        id_seleccionado = opciones[nombre]['id']
+        edit_habitos.editar_habito(id_seleccionado)
 
     root = tk.Tk()
 
@@ -225,7 +235,7 @@ def ventana_main():
     scrollbar3.grid(row=2, column=1, sticky="ns")
 
     canvas3.create_window((0,0), window=frame, anchor="nw")
-    canvas3.bind_all("<MouseWheel>", on_mousewheel_scroll_hecho)
+    # canvas3.bind_all("<MouseWheel>", on_mousewheel_scroll_hecho)
 
     frame.bind("<Configure>", lambda e: canvas3.configure(scrollregion=canvas3.bbox("all")))
     
@@ -250,6 +260,7 @@ def ventana_main():
     labels = []
     botones = []
     botones_cal = []
+    botones_edit = []
 
 
 
@@ -261,25 +272,30 @@ def ventana_main():
     for i, nombre in enumerate(opciones.keys()):
         if opciones[nombre]['type'] == 1:
             color = "#089aff"
+            icono = "\u23F0"
             hecho_diario = verify_daily_habit_pomodoro(opciones[nombre]['id'])
             
             
         elif opciones[nombre]['type'] == 2:
             color = "#73c977"
+            icono = "\u2714"
             hecho_diario = verify_daily_habit(opciones[nombre]['id'])
             
         
         label_mover = tk.Label(lista_habitos, text=nombre, bg=color, fg='white')
-        boton = tk.Button(lista_habitos, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
-        boton_cal = tk.Button(lista_habitos, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
+        boton = tk.Button(lista_habitos, text=icono, command=lambda n=nombre: mostrar_id(n))
+        boton_cal = tk.Button(lista_habitos, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
+        boton_edit = tk.Button(lista_habitos, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
         
         label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
         boton.grid(row=i, column=1, sticky="w", padx=(50,1))
-        boton_cal.grid(row=i, column=2, sticky="w", padx=(1,100))
+        boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
+        boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
         
         labels.append(label_mover)
         botones.append(boton)
         botones_cal.append(boton_cal)
+        botones_edit.append(boton_edit)
         
         
         # i = i + 1
@@ -298,12 +314,18 @@ def ventana_main():
                 boton = tk.Button(frame, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
                 boton.grid(row=i, column=1, sticky="w", padx=(50,1))
                 
-                boton_cal = tk.Button(frame, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
-                boton_cal.grid(row=i, column=2, sticky="w", padx=(1,100))
+                boton_cal = tk.Button(frame, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
+                boton_cal.grid(row=i, column=2, sticky="w", padx=(1,5))
+                
+                boton_edit = tk.Button(frame, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
+                boton_edit.grid(row=i, column=3, sticky="w", padx=(1,5))
+                
+                
                 
                 labels[i].grid_remove()
                 botones[i].grid_remove()
                 botones_cal[i].grid_remove()
+                botones_edit[i].grid_remove()
         
     actualiza_listas()
             

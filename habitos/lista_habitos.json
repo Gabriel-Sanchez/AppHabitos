@@ -5,7 +5,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 1,
@@ -13,7 +14,8 @@
         "work_time": 10,
         "short_break": 5,
         "count": 1,
-        "type":1
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 2,
@@ -21,7 +23,8 @@
         "work_time": 15,
         "short_break": 5,
         "count": 1,
-        "type":1
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 3,
@@ -29,8 +32,8 @@
         "work_time": 10,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 1
     },
     {
         "id": 4,
@@ -38,17 +41,17 @@
         "work_time": 10,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 5,
         "nombre": "Tesis",
         "work_time": 25,
         "short_break": 5,
-        "count": 2,
-        "type":1
-
+        "count": 5,
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 6,
@@ -56,8 +59,8 @@
         "work_time": 25,
         "short_break": 5,
         "count": 2,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 7,
@@ -65,8 +68,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 1
     },
     {
         "id": 8,
@@ -74,8 +77,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 4
     },
     {
         "id": 9,
@@ -83,17 +86,17 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":2
-
+        "type": 2,
+        "orden_n": 2
     },
     {
         "id": 10,
-        "nombre": "habby",
+        "nombre": "hobby",
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 11,
@@ -101,8 +104,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 12,
@@ -110,8 +113,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 13,
@@ -119,17 +122,17 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 14,
-        "nombre": "Platzi español ",
+        "nombre": "Platzi espa\u00f1ol ",
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 15,
@@ -137,8 +140,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":2
-
+        "type": 2,
+        "orden_n": 2
     },
     {
         "id": 16,
@@ -146,8 +149,8 @@
         "work_time": 1,
         "short_break": 1,
         "count": 1,
-        "type":2
-
+        "type": 2,
+        "orden_n": 2
     },
     {
         "id": 17,
@@ -155,8 +158,8 @@
         "work_time": 5,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     },
     {
         "id": 18,
@@ -164,7 +167,7 @@
         "work_time": 5,
         "short_break": 1,
         "count": 1,
-        "type":1
-
+        "type": 1,
+        "orden_n": 2
     }
 ]
