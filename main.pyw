@@ -525,12 +525,13 @@ def ventana_main():
 
 
 
-    def show_data():
+ 
         # Crear una nueva ventana si no existe
-        if 'new_window' not in globals():
-            global new_window
+    def show_data():
+        global new_window
+        # Crear una nueva ventana si no existe
+        if 'new_window' not in globals() or not new_window.winfo_exists():
             new_window = tk.Toplevel(root)
-            new_window.protocol("WM_DELETE_WINDOW", close_window)
         
         # Limpiar la ventana
         for widget in new_window.winfo_children():
@@ -550,7 +551,6 @@ def ventana_main():
         
         # Mostrar todos los elementos
         for i, item in enumerate(data):
-            # tk.Label(new_window, text=json.dumps(item)).pack()
             tk.Label(new_window, text=item['nombre']).grid(row=i,column=2)
             # Botón para mover el elemento hacia arriba (si no es el primero)
             if i > 0:
@@ -558,11 +558,6 @@ def ventana_main():
             # Botón para mover el elemento hacia abajo (si no es el último)
             if i < len(data) - 1:
                 tk.Button(new_window, text="↓", command=lambda i=i: move(i, 1)).grid(row=i,column=1)
-
-    def close_window():
-        # Eliminar la referencia a la ventana cuando se cierra
-        if 'new_window' in globals():
-            del globals()['new_window']        
     
 
 

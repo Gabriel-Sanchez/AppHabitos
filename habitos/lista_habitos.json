@@ -1,14 +1,5 @@
 [
     {
-        "id": 0,
-        "nombre": "prueba",
-        "work_time": 1,
-        "short_break": 1,
-        "count": 1,
-        "type": 1,
-        "orden_n": 1
-    },
-    {
         "id": 7,
         "nombre": "Duo",
         "work_time": 1,
@@ -16,6 +7,15 @@
         "count": 1,
         "type": 1,
         "orden_n": 2
+    },
+    {
+        "id": 0,
+        "nombre": "prueba",
+        "work_time": 1,
+        "short_break": 1,
+        "count": 1,
+        "type": 1,
+        "orden_n": 1
     },
     {
         "id": 8,
@@ -63,15 +63,6 @@
         "orden_n": 7
     },
     {
-        "id": 5,
-        "nombre": "Tesis",
-        "work_time": 25,
-        "short_break": 5,
-        "count": 5,
-        "type": 1,
-        "orden_n": 9
-    },
-    {
         "id": 9,
         "nombre": "Fotografia",
         "work_time": 1,
@@ -79,6 +70,15 @@
         "count": 1,
         "type": 2,
         "orden_n": 8
+    },
+    {
+        "id": 5,
+        "nombre": "Tesis",
+        "work_time": 25,
+        "short_break": 5,
+        "count": 5,
+        "type": 1,
+        "orden_n": 9
     },
     {
         "id": 4,
@@ -99,8 +99,8 @@
         "orden_n": 11
     },
     {
-        "id": 11,
-        "nombre": "Ejercicio",
+        "id": 12,
+        "nombre": "Chat in english ",
         "work_time": 1,
         "short_break": 1,
         "count": 1,
@@ -108,8 +108,8 @@
         "orden_n": 12
     },
     {
-        "id": 12,
-        "nombre": "Chat in english ",
+        "id": 11,
+        "nombre": "Ejercicio",
         "work_time": 1,
         "short_break": 1,
         "count": 1,
