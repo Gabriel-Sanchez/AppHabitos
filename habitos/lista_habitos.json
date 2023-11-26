@@ -6,7 +6,7 @@
         "short_break": 1,
         "count": 1,
         "type": 1,
-        "orden_n": 2
+        "orden_n": 1
     },
     {
         "id": 1,
@@ -24,7 +24,7 @@
         "short_break": 5,
         "count": 1,
         "type": 1,
-        "orden_n": 2
+        "orden_n": 3
     },
     {
         "id": 3,
@@ -169,23 +169,5 @@
         "count": 1,
         "type": 1,
         "orden_n": 2
-    },
-    {
-        "id": 23,
-        "nombre": 22,
-        "work_time": 3,
-        "short_break": 3,
-        "count": 4,
-        "type": 2,
-        "orden_n": 3
-    },
-    {
-        "id": 4,
-        "nombre": "aeua",
-        "work_time": 1,
-        "short_break": 34,
-        "count": 4,
-        "type": 5,
-        "orden_n": 1
     }
 ]

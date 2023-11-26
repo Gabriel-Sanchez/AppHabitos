@@ -520,6 +520,10 @@ def ventana_main():
         tk.Button(new_window, text="Submit", command=submit).pack()
 
 
+    # Botón para abrir la ventana de agregar datos
+    tk.Button(root, text="Add Data", command=add_data).grid(row=1, column=1 )
+
+
 
 
 
