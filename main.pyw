@@ -561,7 +561,8 @@ def ventana_main():
 
     def close_window():
         # Eliminar la referencia a la ventana cuando se cierra
-        del globals()['new_window']            
+        if 'new_window' in globals():
+            del globals()['new_window']        
     
 
 
