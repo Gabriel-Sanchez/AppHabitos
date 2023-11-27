@@ -41,6 +41,14 @@ def create_edit_window(obj):
 
     save_button = Button(window, text="Guardar", command=save_changes)
     save_button.pack()
+    
+    def delete_obj():
+        data.remove(obj)
+        save_json()
+        window.destroy()
+
+    delete_button = Button(window, text="Borrar", command=delete_obj)
+    delete_button.pack()
 
     window.mainloop()
 

@@ -250,7 +250,10 @@ def ventana_main():
     #     tk.Label(frame, text="Label %s" % i).pack()
 
     # Crea un botón que muestre u oculte el frame
-    button = tk.Button(root, text="hechos", command=toggle)
+    
+    frame_botones = tk.Frame(root)
+    frame_botones.grid(row=1, column=0 )
+    button = tk.Button(frame_botones, text="hechos", command=toggle)
     # button.grid()
     # button.pack()
     button.grid(row=1, column=0 )
@@ -287,8 +290,8 @@ def ventana_main():
         boton_cal = tk.Button(lista_habitos, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
         boton_edit = tk.Button(lista_habitos, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
         
-        label_mover.grid(row=i, column=0,sticky='ew', padx=(100,20))
-        boton.grid(row=i, column=1, sticky="w", padx=(50,1))
+        label_mover.grid(row=i, column=0,sticky='ew', ipadx=35, padx=(100,20))
+        boton.grid(row=i, column=1, sticky="w", padx=(1,1))
         boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
         boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
         
@@ -309,16 +312,16 @@ def ventana_main():
                 
             if hecho_diario:
                 label_mover = tk.Label(frame, text=nombre, bg=color, fg='white')
-                label_mover.grid(row=i, column=0, sticky='ew', padx=(50,20))
+                label_mover.grid(row=i, column=0,sticky='ew', ipadx=35, padx=(100,20))
                 
                 boton = tk.Button(frame, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
-                boton.grid(row=i, column=1, sticky="w", padx=(50,1))
+                boton.grid(row=i, column=1, sticky="w", padx=(1,1))
                 
                 boton_cal = tk.Button(frame, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
-                boton_cal.grid(row=i, column=2, sticky="w", padx=(1,5))
+                boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
                 
                 boton_edit = tk.Button(frame, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
-                boton_edit.grid(row=i, column=3, sticky="w", padx=(1,5))
+                boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
                 
                 
                 
@@ -490,9 +493,10 @@ def ventana_main():
         
         # Calcular el próximo ID
         next_id = max(item['id'] for item in data) + 1
+        next_orden_n = max(item['orden_n'] for item in data) + 1
         
         # Especificar los campos permitidos
-        allowed_fields = ['nombre', 'work_time', 'short_break', 'count', 'type', 'orden_n']
+        allowed_fields = ['nombre', 'work_time', 'short_break', 'count', 'type']
         
         # Crear campos de entrada solo para las claves permitidas
         entries = {}
@@ -503,7 +507,7 @@ def ventana_main():
         
         # Función para agregar los datos ingresados a la lista de datos
         def submit():
-            new_entry = {'id': next_id}
+            new_entry = {'id': next_id, 'orden_n': next_orden_n}
             for key, entry in entries.items():
                 value = entry.get()
                 # Convertir a int si es posible, de lo contrario dejar como texto
@@ -521,7 +525,7 @@ def ventana_main():
 
 
     # Botón para abrir la ventana de agregar datos
-    tk.Button(root, text="Add Data", command=add_data).grid(row=1, column=1 )
+    tk.Button(frame_botones, text="Agregar", command=add_data).grid(row=1, column=1 )
 
 
 
@@ -561,7 +565,7 @@ def ventana_main():
     
 
 
-    tk.Button(root, text="Show Data", command=show_data).grid(row=1, column=2 )
+    tk.Button(frame_botones, text="Ordenar", command=show_data).grid(row=1, column=2 )
     
     root.iconbitmap('assets/icon/icon.ico')
 
