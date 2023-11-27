@@ -77,8 +77,6 @@ def ventana_main():
     #     habito_calendario(opciones[var.get()])
 
     # Leer opciones de archivo JSON
-    with open('habitos/lista_habitos.json', 'r') as f:
-        data = json.load(f)
 
     # # Crear diccionario de opciones con nombres como claves e IDs como valores
     # opciones = {item['nombre']: item['id'] for item in data}
@@ -95,13 +93,20 @@ def ventana_main():
 
 
     # Crear diccionario de opciones con nombres como claves e IDs como valores
-    opciones = {item['nombre']: { 'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n'] }    for item in data}
     # print(opciones)
     # Sort the data based on 'orden_n'
-    sorted_data = sorted(data, key=lambda item: item['orden_n'])
+    
+    def ordenar_lista():
+        global opciones
+        with open('habitos/lista_habitos.json', 'r') as f:
+            data = json.load(f)
+        opciones = {item['nombre']: { 'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n'] }    for item in data}
+        sorted_data = sorted(data, key=lambda item: item['orden_n'])
 
-    # Now, create your dictionary
-    opciones = {item['nombre']: {'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n']} for item in sorted_data}
+        # Now, create your dictionary
+        opciones = {item['nombre']: {'id': item['id'], 'type': item['type'], 'orden_n': item['orden_n']} for item in sorted_data}
+        
+    ordenar_lista()
 
 
     # Función para mostrar el ID cuando se presiona un botón
@@ -259,6 +264,9 @@ def ventana_main():
     button.grid(row=1, column=0 )
 
 
+    def limpiar():
+        for widget in lista_habitos.winfo_children():
+            widget.destroy()
 
     labels = []
     botones = []
@@ -267,47 +275,53 @@ def ventana_main():
 
 
 
-
-
-
-    i = 0
-    # Crear botones para cada opción en el diccionario
-    for i, nombre in enumerate(opciones.keys()):
-        if opciones[nombre]['type'] == 1:
-            color = "#089aff"
-            icono = "\u23F0"
-            hecho_diario = verify_daily_habit_pomodoro(opciones[nombre]['id'])
-            
-            
-        elif opciones[nombre]['type'] == 2:
-            color = "#73c977"
-            icono = "\u2714"
-            hecho_diario = verify_daily_habit(opciones[nombre]['id'])
-            
+    def llenar_lista():
         
-        label_mover = tk.Label(lista_habitos, text=nombre, bg=color, fg='white')
-        boton = tk.Button(lista_habitos, text=icono, command=lambda n=nombre: mostrar_id(n))
-        boton_cal = tk.Button(lista_habitos, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
-        boton_edit = tk.Button(lista_habitos, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
-        
-        label_mover.grid(row=i, column=0,sticky='ew', ipadx=35, padx=(100,20))
-        boton.grid(row=i, column=1, sticky="w", padx=(1,1))
-        boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
-        boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
-        
-        labels.append(label_mover)
-        botones.append(boton)
-        botones_cal.append(boton_cal)
-        botones_edit.append(boton_edit)
+        global opciones
+
+        i = 0
+        # Crear botones para cada opción en el diccionario
+        for i, nombre in enumerate(opciones.keys()):
+            if opciones[nombre]['type'] == 1:
+                color = "#089aff"
+                icono = "\u23F0"
+                hecho_diario = verify_daily_habit_pomodoro(opciones[nombre]['id'])
+                
+                
+            elif opciones[nombre]['type'] == 2:
+                color = "#73c977"
+                icono = "\u2714"
+                hecho_diario = verify_daily_habit(opciones[nombre]['id'])
+                
+            
+            label_mover = tk.Label(lista_habitos, text=nombre, bg=color, fg='white')
+            boton = tk.Button(lista_habitos, text=icono, command=lambda n=nombre: mostrar_id(n))
+            boton_cal = tk.Button(lista_habitos, text="\U0001F4CA", command=lambda n=nombre: abrir_calendario(n))
+            boton_edit = tk.Button(lista_habitos, text="\u270E", command=lambda n=nombre: abrir_editar_habito_pom(n))
+            
+            label_mover.grid(row=i, column=0,sticky='ew', ipadx=35, padx=(100,20))
+            boton.grid(row=i, column=1, sticky="w", padx=(1,1))
+            boton_cal.grid(row=i, column=2, sticky="w", padx=(1,1))
+            boton_edit.grid(row=i, column=3, sticky="w", padx=(1,2))
+            
+            labels.append(label_mover)
+            botones.append(boton)
+            botones_cal.append(boton_cal)
+            botones_edit.append(boton_edit)
         
         
         # i = i + 1
+    llenar_lista()
         
     def actualiza_listas():
         for i, nombre in enumerate(opciones.keys()):
             if opciones[nombre]['type'] == 1:
+                color = "#089aff"
+                icono = "\u23F0"
                 hecho_diario = verify_daily_habit_pomodoro(opciones[nombre]['id'])
             elif opciones[nombre]['type'] == 2:
+                color = "#73c977"
+                icono = "\u2714"
                 hecho_diario = verify_daily_habit(opciones[nombre]['id'])
                 
             if hecho_diario:
@@ -540,6 +554,9 @@ def ventana_main():
         # Limpiar la ventana
         for widget in new_window.winfo_children():
             widget.destroy()
+            
+        # for widget in root.winfo_children():
+        #     widget.destroy()
         
         # Cargar los datos y ordenarlos por 'orden_n'
         data = sorted(load_data(), key=lambda x: x['orden_n'])
@@ -552,6 +569,9 @@ def ventana_main():
             save_data(data)
             # Recargar la ventana
             show_data()
+            limpiar()
+            ordenar_lista()
+            llenar_lista()
         
         # Mostrar todos los elementos
         for i, item in enumerate(data):

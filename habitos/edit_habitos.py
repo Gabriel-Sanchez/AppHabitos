@@ -1,5 +1,6 @@
 import json
 from tkinter import *
+# from main import 
 
 # Primero, lee el archivo JSON
 with open('habitos/lista_habitos.json', 'r') as f:
