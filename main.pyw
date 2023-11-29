@@ -54,7 +54,7 @@ def ventana_main():
         ventana_pomodoro.ventana_pomodoro(2)
         
 
-    def center_window(root, width=300, height=200):
+    def center_window(root, width=500, height=200):
         # Obtiene las dimensiones de la pantalla
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
@@ -165,6 +165,7 @@ def ventana_main():
 
     # Configura el canvas para que se desplace con la barra de desplazamiento
     canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.config(width=800)
 
     # Empaqueta el canvas y la barra de desplazamiento
     # canvas.pack(side="left", fill="both", expand=True)
@@ -235,6 +236,7 @@ def ventana_main():
     frame = tk.Frame(canvas3)
 
     canvas3.configure(yscrollcommand=scrollbar3.set)
+    canvas3.config(width=800)
     
     canvas3.grid(row=2, column=0, sticky="nsew")
     scrollbar3.grid(row=2, column=1, sticky="ns")
@@ -397,7 +399,7 @@ def ventana_main():
     # btn_mantener = tk.Button(root, text="Mantener en Primero", command=mantener_en_primero)
     # btn_mantener.pack(pady=20)
 
-    center_window(root, 500, 400)
+    center_window(root, 600, 400)
 
 
 
@@ -583,9 +585,13 @@ def ventana_main():
             if i < len(data) - 1:
                 tk.Button(new_window, text="↓", command=lambda i=i: move(i, 1)).grid(row=i,column=1)
     
-
+    def actualizar_v():
+        limpiar()
+        ordenar_lista()
+        llenar_lista()
 
     tk.Button(frame_botones, text="Ordenar", command=show_data).grid(row=1, column=2 )
+    tk.Button(frame_botones, text="Actualizar", command=actualizar_v).grid(row=1, column=3 )
     
     root.iconbitmap('assets/icon/icon.ico')
 
