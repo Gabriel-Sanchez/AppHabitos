@@ -69,32 +69,6 @@ def ventana_main():
     def seleccionar_opcion(id):
         print(f"Opción seleccionada: {id}")
 
-    # def enviar_seleccion():
-    #     seleccionar_opcion(opciones[var.get()])
-    #     ventana_pomodoro.ventana_pomodoro(opciones[var.get()])
-        
-    # def abrir_habito_calendario():
-    #     habito_calendario(opciones[var.get()])
-
-    # Leer opciones de archivo JSON
-
-    # # Crear diccionario de opciones con nombres como claves e IDs como valores
-    # opciones = {item['nombre']: item['id'] for item in data}
-
-    # # Crear ventana de Tkinter
-    # root = tk.Tk()
-
-    # # Crear variable de control para el menú desplegable
-    # var = tk.StringVar(root)
-
-    # # Crear menú desplegable
-    # opciones_menu = tk.OptionMenu(root, var, *opciones.keys())
-    # opciones_menu.pack()
-
-
-    # Crear diccionario de opciones con nombres como claves e IDs como valores
-    # print(opciones)
-    # Sort the data based on 'orden_n'
     
     def ordenar_lista():
         global opciones
@@ -139,24 +113,6 @@ def ventana_main():
 
     root = tk.Tk()
 
-    # image = Image.open('assets/icon/icon.jpg')
-
-    # # Convierte la imagen a formato PhotoImage
-    # photo = ImageTk.PhotoImage(image)
-
-    # root.wm_iconphoto(True, photo)
-    
-    # image = Image.open('assets/icon/icon.jpg')
-    # photo = ImageTk.PhotoImage(image)
-    # # Guarda una referencia a la imagen en el objeto de la ventana
-    # root.icon_photo = photo
-    # root.wm_iconphoto(True, root.icon_photo)
-
-
-    # lista_habitos = tk.Frame(root, bg='white', relief='raised')
-    # lista_habitos.pack()
-
-
     canvas = tk.Canvas(root)
     scrollbar = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
 
@@ -167,9 +123,6 @@ def ventana_main():
     canvas.configure(yscrollcommand=scrollbar.set)
     canvas.config(width=800)
 
-    # Empaqueta el canvas y la barra de desplazamiento
-    # canvas.pack(side="left", fill="both", expand=True)
-    # scrollbar.pack(side="right", fill="y")
     
     canvas.grid(row=0, column=0, sticky="nsew")
     scrollbar.grid(row=0, column=1, sticky="ns")
@@ -184,13 +137,6 @@ def ventana_main():
     lista_habitos.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
 
-
-
-
-
-
-
-
     def toggle():
         if frame.winfo_viewable():
             # frame.grid_remove()
@@ -201,38 +147,14 @@ def ventana_main():
         else:
             canvas3.grid(row=2, column=0, sticky="nsew")
             scrollbar3.grid(row=2, column=1, sticky="ns")
-            # Redibuja el Frame en el Canvas
-            # canvas2.create_window((0, 0), window=frame, anchor="nw")
-            # frame.update_idletasks()
-            # canvas2.config(scrollregion=canvas2.bbox("all"))
-            # # frame.grid(row=2, column=0 , sticky="nsew" ) 
-            # canvas2.grid(row=2, column=0, sticky="nsew")
-            # scrollbar2.grid(row=2, column=1, sticky="ns")
-            # frame.update_idletasks()
-            # canvas2.config(scrollregion=canvas2.bbox("all"))
 
-            # frame.pack()
-
-    # Crea un frame
-    
-    
-   
-    # canvas2 = tk.Canvas(root)
-    # scrollbar2 = tk.Scrollbar(root, orient="vertical", command=canvas2.yview)
-    # canvas2.configure(yscrollcommand=scrollbar2.set)
-    # # frame2 = tk.Frame(canvas2)
-    # canvas2.create_window((0, 0), window=frame, anchor="nw")
-    
-    
-    
-    # frame.bind("<Configure>", lambda e: canvas2.configure(scrollregion=canvas2.bbox("all")))
     
     
     
     canvas3 = tk.Canvas(root)
     scrollbar3 = tk.Scrollbar(root, orient="vertical", command=canvas3.yview)
 
-    # lista_habitos = tk.Frame(canvas3)
+
     frame = tk.Frame(canvas3)
 
     canvas3.configure(yscrollcommand=scrollbar3.set)
@@ -242,27 +164,16 @@ def ventana_main():
     scrollbar3.grid(row=2, column=1, sticky="ns")
 
     canvas3.create_window((0,0), window=frame, anchor="nw")
-    # canvas3.bind_all("<MouseWheel>", on_mousewheel_scroll_hecho)
+ 
 
     frame.bind("<Configure>", lambda e: canvas3.configure(scrollregion=canvas3.bbox("all")))
     
-    
-    
-    
-    
 
-    # Crea algunos widgets en el frame
-    # for i in range(10):
-    #     # tk.Label(frame, text="Label %s" % i).grid(row=i)
-    #     tk.Label(frame, text="Label %s" % i).pack()
-
-    # Crea un botón que muestre u oculte el frame
     
     frame_botones = tk.Frame(root)
     frame_botones.grid(row=1, column=0 )
     button = tk.Button(frame_botones, text="hechos", command=toggle)
-    # button.grid()
-    # button.pack()
+
     button.grid(row=1, column=0 )
 
 
@@ -348,148 +259,8 @@ def ventana_main():
         
     actualiza_listas()
             
-    #     if hecho_diario:
-    #         label_mover = tk.Label(frame, text=nombre, bg=color, fg='white')
-    #         label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
-            
-    #         boton = tk.Button(frame, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
-    #         boton.grid(row=i, column=1, sticky="w", padx=(50,1))
-            
-    #         boton_cal = tk.Button(frame, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
-    #         boton_cal.grid(row=i, column=2, sticky="w", padx=(1,100))
-
-
-    # for i, nombre in enumerate(opciones.keys()):
-    #     if opciones[nombre]['type'] == 1:
-    #         hecho_diario = verify_daily_habit_pomodoro(opciones[nombre]['id'])
-    #     elif opciones[nombre]['type'] == 2:
-    #         hecho_diario = verify_daily_habit(opciones[nombre]['id'])
-            
-    #     if not hecho_diario:
-    #         labels[i].grid(row=i, column=0, sticky="w", padx=(100,20))
-    #         botones[i].grid(row=i, column=1, sticky="w", padx=(50,1))
-    #         botones_cal[i].grid(row=i, column=2, sticky="w", padx=(1,100))
-    #     else:
-    #         labels[i].grid_remove()
-    #         botones[i].grid_remove()
-    #         botones_cal[i].grid_remove()
-            
-    #     if hecho_diario:
-    #         label_mover = tk.Label(frame, text=nombre, bg=color, fg='white')
-    #         label_mover.grid(row=i, column=0, sticky="w", padx=(100,20))
-            
-    #         boton = tk.Button(frame, text="\u23F0", command=lambda n=nombre: mostrar_id(n))
-    #         boton.grid(row=i, column=1, sticky="w", padx=(50,1))
-            
-    #         boton_cal = tk.Button(frame, text="\u25B2", command=lambda n=nombre: abrir_calendario(n))
-    #         boton_cal.grid(row=i, column=2, sticky="w", padx=(1,100))
-
-
-        
-
-
-
-
-    # # Crear botón para enviar selección
-    # boton = tk.Button(root, text="Enviar", command=enviar_seleccion)
-    # boton2 = tk.Button(root, text="calendar", command=abrir_habito_calendario)
-    # boton.pack()
-    # boton2.pack()
-
-    # btn_mantener = tk.Button(root, text="Mantener en Primero", command=mantener_en_primero)
-    # btn_mantener.pack(pady=20)
 
     center_window(root, 600, 400)
-
-
-
-    # # Obtener el ancho y alto de la pantalla
-    # ancho_pantalla = root.winfo_screenwidth()
-    # alto_pantalla = root.winfo_screenheight()
-
-    # # Definir las dimensiones de la ventana
-    # ancho_ventana = 300
-    # alto_ventana = 200
-
-    # # Calcular la posición para la esquina inferior derecha
-    # posicion_x = ancho_pantalla - ancho_ventana
-    # posicion_y = alto_pantalla - alto_ventana
-
-    # # Establecer la geometría de la ventana
-    # root.geometry(f"{ancho_ventana}x{alto_ventana}+{posicion_x}+{posicion_y}")
-
-
-
-
-
-    # # Eliminar bordes y barra superior
-    # root.overrideredirect(True)
-
-    # # Definir las dimensiones de la ventana
-    # ancho_ventana = 400
-    # alto_ventana = 300
-
-    # # Establecer la geometría de la ventana
-    # root.geometry(f"{ancho_ventana}x{alto_ventana}")
-
-    # # Función para cerrar la ventana
-    # def cerrar_ventana():
-    #     root.destroy()
-
-    # # Botón para cerrar la ventana
-    # btn_cerrar = tk.Button(root, text="Cerrar", command=cerrar_ventana)
-    # btn_cerrar.pack()
-
-
-
-
-
-
-
-
-
-    # import tkinter as tk
-
-    # def start_move(event):
-    #     root.startX = event.x
-    #     root.startY = event.y
-
-    # def stop_move(event):
-    #     root.startX = None
-    #     root.startY = None
-
-    # def do_move(event):
-    #     dx = event.x - root.startX
-    #     dy = event.y - root.startY
-    #     x = root.winfo_x() + dx
-    #     y = root.winfo_y() + dy
-    #     root.geometry(f"+{x}+{y}")
-
-
-    # root.overrideredirect(True)  # Elimina la barra de título
-
-    # # Crea un marco en la parte superior para mover la ventana
-    # move_frame = tk.Frame(root, height=20, bg="blue")
-    # move_frame.pack(fill=tk.X)
-
-    # move_frame.bind("<ButtonPress-1>", start_move)
-    # move_frame.bind("<ButtonRelease-1>", stop_move)
-    # move_frame.bind("<B1-Motion>", do_move)
-
-    # content_frame = tk.Frame(root, bg="white")
-    # content_frame.pack(fill=tk.BOTH, expand=True)
-
-    # label = tk.Label(content_frame, text="Haz clic y arrastra la parte azul para mover")
-    # label.pack()
-
-    # # Función para cerrar la ventana
-    # def cerrar_ventana():
-    #     root.destroy()
-
-    # # Botón para cerrar la ventana
-    # btn_cerrar = tk.Button(root, text="Cerrar", command=cerrar_ventana)
-    # btn_cerrar.pack()
-
 
 
     def load_data():
