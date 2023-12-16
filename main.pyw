@@ -9,7 +9,7 @@ import ctypes
 
 
 
-from PIL import Image, ImageTk
+# from PIL import Image, ImageTk
     # Crea una nueva ventana
 def ventana_main():
 
@@ -372,3 +372,26 @@ def ventana_main():
 
 if __name__ == "__main__":
     ventana_main()
+    
+    # import matplotlib.pyplot as plt
+    # import pandas as pd
+    
+    # df = pd.read_csv('registros/historial_habitos.csv')
+
+    # df['fecha'] = pd.to_datetime(df['fecha'])
+
+    # # Convertir 'duracion' a timedelta
+    # df['duracion'] = pd.to_timedelta(df['duracion'])
+
+    # # Crear un subgráfico para cada id de hábito
+    # fig, axs = plt.subplots(df['id_habito'].nunique(), 1, sharex=True, figsize=(10, 10))
+
+    # for ax, (id_habito, df_id) in zip(axs, df.groupby('id_habito')):
+    #     ax.plot(df_id['fecha'], df_id['duracion'], label=f'ID Hábito {id_habito}')
+    #     ax.set_ylabel('Duración')
+    #     ax.legend()
+
+    # axs[-1].set_xlabel('Fecha')
+
+    # plt.tight_layout()
+    # plt.show()

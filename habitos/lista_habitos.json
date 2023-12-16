@@ -56,7 +56,7 @@
     {
         "id": 12,
         "nombre": "Chat in english ",
-        "work_time": 1,
+        "work_time": 10,
         "short_break": 1,
         "count": 1,
         "type": 1,

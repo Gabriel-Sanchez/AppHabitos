@@ -140,7 +140,11 @@ def habito_calendario(id_habito_especifico):
 
     idx = pd.date_range(start='1/1/2023', end='12/31/2023')
     data = data.reindex(idx, fill_value=np.nan)
-    fig, ax = plt.subplots(figsize=(16, 2))
+    # fig, ax = plt.subplots(figsize=(16, 2))
+    fig, (ax, ax2) = plt.subplots(2, figsize=(10, 6))
+ 
+  
+    ax2 = grafico_lineas(id_habito_especifico, ax2, fig)
  
     
     date_heatmap(data['duracion'], cmap='YlOrRd', ax=ax, fig=fig, data=data , campo_data_extra='start_timer')
@@ -152,6 +156,7 @@ def habito_calendario(id_habito_especifico):
     plt.colorbar(cax=cax, orientation='vertical')
     fig.set_size_inches(14, 4)
     center_figure(fig)
+    fig.subplots_adjust(hspace=0.5)
     plt.show()
     
 def habito_calendario_check(id_habito_especifico):
@@ -176,8 +181,14 @@ def habito_calendario_check(id_habito_especifico):
 
     idx = pd.date_range(start='1/1/2023', end='12/31/2023')
     data = data.reindex(idx, fill_value=np.nan)
-    fig, ax = plt.subplots(figsize=(16, 2))
+    fig, (ax, ax2) = plt.subplots(2, figsize=(10, 6))
  
+  
+    ax2 = grafico_lineas(id_habito_especifico, ax2, fig)
+    
+
+    # cursor1 = crear_cursor(ax)
+    # cursor2 = crear_cursor(ax2)
     
     date_heatmap(data['hecho'], cmap='YlOrRd', ax=ax, fig=fig, data=data, campo_data_extra='id_habito')
     
@@ -188,6 +199,60 @@ def habito_calendario_check(id_habito_especifico):
     plt.colorbar(cax=cax, orientation='vertical')
     fig.set_size_inches(14, 4)
     center_figure(fig)
+    fig.subplots_adjust(hspace=0.5)
     plt.show()
+    
 
 #fig, ax = plt.subplots(figsize=(16, 4))
+
+from matplotlib.widgets import Cursor
+
+def grafico_lineas(id, ax2, fig):
+    df = pd.read_csv('registros/historial_habitos.csv')
+
+    # Convertir 'fecha' a datetime y 'duracion' a timedelta
+    df['fecha'] = pd.to_datetime(df['fecha'])
+    df['duracion'] = pd.to_timedelta(df['duracion']).dt.total_seconds() / 60
+
+    # Seleccionar el id_habito
+    id_habito_seleccionado = id  # Cambia esto al ID que quieras
+
+    # Filtrar el DataFrame para el id_habito seleccionado
+    df_filtrado = df[df['id_habito'] == id_habito_seleccionado]
+
+    # Dibujar el gráfico
+    line2, = ax2.plot(df_filtrado['fecha'], df_filtrado['duracion'], label=f'ID Hábito {id_habito_seleccionado}')
+    ax2.set_xlabel('Fecha')
+    ax2.set_ylabel('Duración')
+    ax2.legend()
+
+    # cursor2 = Cursor(ax2, useblit=True, color='red', linewidth=1)
+
+    # # Función para mostrar la duración en horas cuando el cursor pasa sobre un punto del gráfico
+    # def onmotion_ax2(event):
+    #     if event.inaxes == ax2:
+    #         x, y = event.xdata, event.ydata
+    #         y_hours = y / 60  # Convertir minutos a horas
+    #         line2.set_label(f'ID Hábito {id_habito_seleccionado}, Duración: {y_hours:.2f} horas')
+    #         ax2.legend()
+
+    # # Conectar la función al evento de movimiento del cursor
+    # fig.canvas.mpl_connect('motion_notify_event', onmotion_ax2)
+    
+    
+    def onmotion_ax2(event):
+        if event.inaxes == ax2:
+            # print('aeuaoeu')
+            x, y = event.xdata, event.ydata
+            y_hours = y / 60  # Convertir minutos a horas
+            line2.set_label(f' Duración: {y_hours:.2f} horas')
+            ax2.legend()
+            line2.set_visible(True)
+            fig.canvas.draw_idle()
+    fig.canvas.mpl_connect('motion_notify_event', onmotion_ax2)
+
+    return ax2
+
+def crear_cursor(ax):
+    cursor = Cursor(ax, useblit=True, color='red', linewidth=1)
+    return cursor
