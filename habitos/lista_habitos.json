@@ -250,5 +250,14 @@
         "short_break": 2,
         "count": 2,
         "type": 1
+    },
+    {
+        "id": 29,
+        "orden_n": 30,
+        "nombre": "terapify",
+        "work_time": 10,
+        "short_break": 5,
+        "count": 2,
+        "type": 1
     }
 ]

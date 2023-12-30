@@ -182,6 +182,7 @@ def registrar_Fin_habito(id_habito):
  
     # df['duracion'] = pd.to_numeric(df['duracion'])
     df.loc[(df['fecha'].dt.date == hoy) & (df['id_habito'] == id_habito), 'end_timer'] = hora
+    df.to_csv('registros/historial_habitos.csv', index=False)
     
     # if start_timer:
     #     df.loc[(df['fecha'].dt.date == hoy) & (df['id_habito'] == id_habito), 'start_timer'] = hora
@@ -203,4 +204,4 @@ def registrar_Fin_habito(id_habito):
 
 
   
-    df.to_csv('registros/historial_habitos.csv', index=False)
+    # df.to_csv('registros/historial_habitos.csv', index=False)
